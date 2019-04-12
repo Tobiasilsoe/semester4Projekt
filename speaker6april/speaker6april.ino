@@ -7,6 +7,7 @@ Adafruit_NeoPixel strip(2, 6, NEO_GRB + NEO_KHZ800);
 uint32_t purple = strip.Color(128, 0, 128);
 uint32_t yellow = strip.Color(255, 255, 0);
 uint32_t blue = strip.Color(0, 0, 255);
+uint32_t green = strip.Color(0, 128, 0);
 
 int fsrAnalogPin = A0;
 int fsrReading;
@@ -158,6 +159,39 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
   {
     
       
+    if (farve == 1){
+      strip.fill(purple);
+      strip.show();
+      lilla();
+    }
+    else if (farve == 2){
+      strip.fill(yellow);
+      strip.show();
+      gul();
+    }
+
+    delay(5000);
+    if (farve >= 2){
+      farve = 0;
+    }
+    
+    farve++; 
+  }
+
+  strip.clear();
+  strip.show();
+      }
+        void leg2(){
+       // no need to repeat the melody.
+   fsrReading = analogRead(fsrAnalogPin);
+  Serial.println("Tryk = ");
+  Serial.print(fsrReading);
+  strip.fill(green);
+  strip.show();
+  
+  
+  if (fsrReading > 400)
+  {  
     if (farve == 1){
       strip.fill(purple);
       strip.show();

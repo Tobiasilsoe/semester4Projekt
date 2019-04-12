@@ -288,13 +288,19 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
       strip.show();
       farve++; 
   }
-    else if (farve == 2){
-      //magnet sensor 
-      gul();   //genopliv musik
-      if (hallState == LOW) {
-        
       }
-    }
-
+      if (hallState == LOW && farve == 2) {
+        strip.fill(green);
+        strip.show();
+        // stift alle led'er pånær sine point til grøn 
+        // blå er point farve 
+        gul(); // genopliv musik 
+        farve--;
+        Serial.println("alive"); 
+      }
+      else if (hallState == LOW && farve == 1){
+        // skift en led til blå 
+        // Points ++ 
+        Serial.println("pointUp"); 
       }
       }

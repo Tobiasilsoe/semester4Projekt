@@ -52,37 +52,83 @@ NOTE_C5, NOTE_G4*/
   
 
 void setup() {
-  pinMode(buttonPin, INPUT);
-  Serial.begin(9600);
-  strip.begin();
  
-  strip.show();
-
+  Serial.begin(9600);
+  pinMode(buttonPin, INPUT);
+  pinMode(buttonPin2, INPUT);
+  pinMode(buttonPin3, INPUT);
+  digitalWrite(buttonPin,HIGH);
+  digitalWrite(buttonPin2,HIGH);
+  digitalWrite(buttonPin3,HIGH);
   
+  strip.begin();
+  strip.show();
 }
 
 void loop() {
-  buttonState = digitalRead(buttonPin);
-  buttonState2 = digitalRead(buttonPin2);
-  buttonState3 = digitalRead(buttonPin3);
-  delay(10);
-  if(buttonState == HIGH){
-    //leg1();
+  delay(100);
+  
+    while(digitalRead(buttonPin) == LOW)      // If button 1 pressed
+  {
     knap1 = true;
     knap2 = false;
     knap3 = false;
-    Serial.println("leg1");
-  }else if(buttonState2 == HIGH){
+    Serial.println("Button 1 pressed"); // Print "Button 1 pressed" on Serial Monitor
+  }
+  while(digitalRead(buttonPin2) == LOW)      // If button 2 pressed
+  {
     knap1 = false;
     knap2 = true;
     knap3 = false;
-    Serial.println("leg2");
-    }else if(buttonState3 == HIGH){
+    Serial.println("Button 2 pressed"); // Print "Button 2 pressed" on Serial Monitor
+  }
+  while(digitalRead(buttonPin3) == LOW)      // If button 3 pressed
+  {
     knap1 = false;
     knap2 = false;
     knap3 = true;
-    Serial.println("leg3");
+    Serial.println("Button 3 pressed"); // Print "Button 3 pressed" on Serial Monitor
+  }
+  while(knap1==true){
+    Serial.println("leg1 kaldt");
+    leg1();
+    if(digitalRead(buttonPin2) == LOW){
+      knap1= false;
+      knap2=true;
+      }
+       if(digitalRead(buttonPin3) == LOW){
+      knap1= false;
+      knap3=true;
+      }
+      
+    
     }
+    while(knap2==true){
+      //leg2();
+      Serial.println("leg2 kaldt");
+      if(digitalRead(buttonPin) == LOW){
+      knap2= false;
+      knap1=true;
+      }
+       if(digitalRead(buttonPin3) == LOW){
+      knap2= false;
+      knap3=true;
+      }
+      }
+      while(knap3==true){
+      //leg3();
+      Serial.println("leg3 kaldt");
+      if(digitalRead(buttonPin) == LOW){
+      knap3= false;
+      knap1=true;
+      }
+       if(digitalRead(buttonPin2) == LOW){
+      knap3= false;
+      knap2=true;
+      }
+      
+}
+}
 
     while (knap1 == true){
       leg1();

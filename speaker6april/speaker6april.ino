@@ -8,6 +8,7 @@ uint32_t purple = strip.Color(128, 0, 128);
 uint32_t yellow = strip.Color(255, 255, 0);
 uint32_t blue = strip.Color(0, 0, 255);
 uint32_t green = strip.Color(0, 128, 0);
+uint32_t red = strip.Color(255, 0, 0,;
 
 int fsrAnalogPin = A0;
 int fsrReading;
@@ -18,6 +19,10 @@ bool knap3 = false;
 int buttonPin = 2;
 int buttonPin2 = 3;
 int buttonPin3 = 4;
+const byte ledPin = 13; 
+const byte interruptPin = 5
+volatile byte state = LOW; 
+
 
 int buttonState = 0;
 int buttonState2 = 0;
@@ -193,24 +198,14 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
   if (fsrReading > 400)
   {  
     if (farve == 1){
-      strip.fill(purple);
+      strip.fill(red);
       strip.show();
-      lilla();
-    }
-    else if (farve == 2){
-      strip.fill(yellow);
-      strip.show();
-      gul();
-    }
-
-    delay(5000);
-    if (farve >= 2){
-      farve = 0;
-    }
-    
-    farve++; 
+      farve++; 
   }
+    else if (farve = 2){
+      //magnet sensor 
+      gul();   //genopliv musik
+      
+    }
 
-  strip.clear();
-  strip.show();
       }

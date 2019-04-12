@@ -8,7 +8,7 @@ uint32_t purple = strip.Color(128, 0, 128);
 uint32_t yellow = strip.Color(255, 255, 0);
 uint32_t blue = strip.Color(0, 0, 255);
 uint32_t green = strip.Color(0, 128, 0);
-uint32_t red = strip.Color(255, 0, 0,;
+uint32_t red = strip.Color(255, 0, 0);
 
 int fsrAnalogPin = A0;
 int fsrReading;
@@ -19,14 +19,14 @@ bool knap3 = false;
 int buttonPin = 2;
 int buttonPin2 = 3;
 int buttonPin3 = 4;
-const byte ledPin = 13; 
-const byte interruptPin = 5
-volatile byte state = LOW; 
+const byte hallPin = 5;
+ 
 
 
 int buttonState = 0;
 int buttonState2 = 0;
 int buttonState3 = 0;
+int hallState = 0;
 
 
 
@@ -57,9 +57,11 @@ void setup() {
   pinMode(buttonPin, INPUT);
   pinMode(buttonPin2, INPUT);
   pinMode(buttonPin3, INPUT);
+  pinMode(hallPin, OUTPUT);
   digitalWrite(buttonPin,HIGH);
   digitalWrite(buttonPin2,HIGH);
   digitalWrite(buttonPin3,HIGH);
+  
   
   strip.begin();
   strip.show();
@@ -130,11 +132,9 @@ void loop() {
 }
 }
 
-    while (knap1 == true){
-      leg1();
-      }
+    
   
-}
+
 void gul(){
      int noteDurations[] = { 
        2,4,8,8                                        
@@ -199,6 +199,38 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
 
     
     }
+    void blaa(){
+     int noteDurations[] = { 
+       2,4,8,8                                        
+     };
+
+// notes in the melody:
+int melody[] = {  
+  //NOTE_E4, NOTE_E4,NOTE_E4,NOTE_E4
+  //NOTE_G4,NOTE_G4,NOTE_G4,NOTE_G4
+  //NOTE_C7,NOTE_C7,NOTE_C7,NOTE_C7
+  NOTE_C6,NOTE_C6,NOTE_C6,NOTE_C6
+  //NOTE_C8, NOTE_C8, NOTE_C8,NOTE_C8
+  //Define the melody as being the notes following using those defined in pitches.h
+};
+//melody[thisNote]!=-1
+for (int thisNote = 0;thisNote<4 ; thisNote++) {
+   
+    // to calculate the note duration, take one second divided by the note type.
+    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+    int noteDuration = 1000 / noteDurations[thisNote];
+    tone(8, melody[thisNote], noteDuration);
+
+    // to distinguish the notes, set a minimum time between them.
+    // the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noTone(8);
+  }
+
+    
+    }
 
     void leg1(){
        // no need to repeat the melody.
@@ -220,9 +252,17 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
       strip.show();
       gul();
     }
+     else if (farve == 3){
+
+      
+      strip.fill(blue);
+      strip.show();
+      blaa();
+     }
+       
 
     delay(5000);
-    if (farve >= 2){
+    if (farve >= 3){
       farve = 0;
     }
     
@@ -248,10 +288,13 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
       strip.show();
       farve++; 
   }
-    else if (farve = 2){
+    else if (farve == 2){
       //magnet sensor 
       gul();   //genopliv musik
-      
+      if (hallState == LOW) {
+        
+      }
     }
 
+      }
       }

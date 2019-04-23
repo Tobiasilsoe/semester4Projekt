@@ -13,13 +13,14 @@ uint32_t red = strip.Color(255, 0, 0);
 int fsrAnalogPin = A0;
 int fsrReading;
 int farve = 1;
+bool mag = false;
 bool knap1 = false;
 bool knap2 = false;
 bool knap3 = false;
 int buttonPin = 2;
 int buttonPin2 = 3;
 int buttonPin3 = 4;
-const byte hallPin = 5;
+const int hallPin = 5;
  
 
 
@@ -57,7 +58,7 @@ void setup() {
   pinMode(buttonPin, INPUT);
   pinMode(buttonPin2, INPUT);
   pinMode(buttonPin3, INPUT);
-  pinMode(hallPin, OUTPUT);
+  pinMode(hallPin, INPUT);
   digitalWrite(buttonPin,HIGH);
   digitalWrite(buttonPin2,HIGH);
   digitalWrite(buttonPin3,HIGH);
@@ -69,6 +70,7 @@ void setup() {
 
 void loop() {
   delay(100);
+  
   
     while(digitalRead(buttonPin) == LOW)      // If button 1 pressed
   {
@@ -92,7 +94,7 @@ void loop() {
     Serial.println("Button 3 pressed"); // Print "Button 3 pressed" on Serial Monitor
   }
   while(knap1==true){
-    Serial.println("leg1 kaldt");
+    //Serial.println("leg1 kaldt");
     leg1();
     if(digitalRead(buttonPin2) == LOW){
       knap1= false;
@@ -106,8 +108,8 @@ void loop() {
     
     }
     while(knap2==true){
-      //leg2();
-      Serial.println("leg2 kaldt");
+      leg2();
+    //  Serial.println("leg2 kaldt");
       if(digitalRead(buttonPin) == LOW){
       knap2= false;
       knap1=true;
@@ -119,7 +121,7 @@ void loop() {
       }
       while(knap3==true){
       //leg3();
-      Serial.println("leg3 kaldt");
+    //  Serial.println("leg3 kaldt");
       if(digitalRead(buttonPin) == LOW){
       knap3= false;
       knap1=true;
@@ -275,32 +277,38 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
         void leg2(){
        // no need to repeat the melody.
    fsrReading = analogRead(fsrAnalogPin);
-  Serial.println("Tryk = ");
+ // Serial.println("Tryk = ");
   Serial.print(fsrReading);
+  delay(500);
   strip.fill(green);
   strip.show();
+  hallState = digitalRead(hallPin);
   
-  
-  if (fsrReading > 400)
+  if (fsrReading > 200)
   {  
-    if (farve == 1){
+    if (mag == false){
       strip.fill(red);
       strip.show();
-      farve++; 
+      Serial.print("dead");
+      mag = true; 
   }
       }
-      if (hallState == LOW && farve == 2) {
+      if (hallState == HIGH && mag == true) {
         strip.fill(green);
         strip.show();
         // stift alle led'er pånær sine point til grøn 
         // blå er point farve 
         gul(); // genopliv musik 
-        farve--;
+        
         Serial.println("alive"); 
+        mag = false;
       }
-      else if (hallState == LOW && farve == 1){
+      else if (hallState == HIGH && mag == false){
         // skift en led til blå 
         // Points ++ 
         Serial.println("pointUp"); 
       }
+    //  else {
+      //  return null; 
+     // }
       }

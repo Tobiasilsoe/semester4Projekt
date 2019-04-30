@@ -1,8 +1,7 @@
 #include "pitches.h"
 
 #include <Adafruit_NeoPixel.h>
-
-Adafruit_NeoPixel strip(2, 6, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(48, 6, NEO_GRB + NEO_KHZ800);
 
 uint32_t purple = strip.Color(128, 0, 128);
 uint32_t yellow = strip.Color(255, 255, 0);
@@ -20,6 +19,7 @@ bool knap3 = false;
 int buttonPin = 2;
 int buttonPin2 = 3;
 int buttonPin3 = 4;
+int points = 0;
 const int hallPin = 5;
  
 
@@ -271,21 +271,20 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
     farve++; 
   }
    if (hallState == HIGH) {
-        strip.fill(blue);
+        strip.fill(blue);      
         strip.show();
-        // stift alle led'er pånær sine point til grøn 
-        // blå er point farve 
-        gul(); // genopliv musik 
         Serial.println("blaa"); 
-        strip.show();
       }
         void leg2(){
-       // no need to repeat the melody.
-   fsrReading = analogRead(fsrAnalogPin);
- // Serial.println("Tryk = ");
+  // no need to repeat the melody.
+  fsrReading = analogRead(fsrAnalogPin);
+  // Serial.println("Tryk = ");
   Serial.print(fsrReading);
   delay(500);
-  strip.fill(green);
+  points = 0;
+  mag = false;
+  strip.fill(blue, 0, points);              // stift alle led'er pånær sine point til grøn 
+  strip.fill(green, 1, 48);
   strip.show();
   hallState = digitalRead(hallPin);
   
@@ -297,23 +296,20 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
       Serial.print("dead");
       mag = true; 
   }
-      }
-      if (hallState == HIGH && mag == true) {
-        strip.fill(green);
+ }
+  if (hallState == HIGH && mag == true) {
+        strip.fill(blue, 0, points);        // stift alle led'er pånær sine point til grøn 
+        strip.fill(green, points+1, 48);    // blå er point farve 
         strip.show();
-        // stift alle led'er pånær sine point til grøn 
-        // blå er point farve 
-        gul(); // genopliv musik 
-        
+        gul();                              // genopliv musik 
         Serial.println("alive"); 
         mag = false;
       }
-      else if (hallState == HIGH && mag == false){
-        // skift en led til blå 
-        // Points ++ 
+  else if (hallState == HIGH && mag == false){ 
+        Points ++ 
+        strip.fill(blue, 0, points);        // skift en led til blå 
+        strip.fill(green, points+1, 48);
+        strip.show();
         Serial.println("pointUp"); 
       }
-    //  else {
-      //  return null; 
-     // }
-      }
+     }

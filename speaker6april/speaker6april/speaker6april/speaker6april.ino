@@ -84,6 +84,8 @@ void loop() {
     knap1 = false;
     knap2 = true;
     knap3 = false;
+    points = 0;                           // reset point i legen 
+    mag = false;                          // reset levende 
     Serial.println("Button 2 pressed"); // Print "Button 2 pressed" on Serial Monitor
   }
   while(digitalRead(buttonPin3) == LOW)      // If button 3 pressed
@@ -274,16 +276,15 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
         strip.fill(blue);      
         strip.show();
         Serial.println("blaa"); 
-      }
-        void leg2(){
+      }}
+  void leg2(){
+    
   // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
   // Serial.println("Tryk = ");
   Serial.print(fsrReading);
   delay(500);
-  points = 0;
-  mag = false;
-  strip.fill(blue, 0, points);              // stift alle led'er pånær sine point til grøn 
+  strip.fill(blue, 0, points);              // stift alle led'er pånær 1 point til grøn 
   strip.fill(green, 1, 48);
   strip.show();
   hallState = digitalRead(hallPin);
@@ -306,7 +307,7 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
         mag = false;
       }
   else if (hallState == HIGH && mag == false){ 
-        Points ++ 
+        points ++;
         strip.fill(blue, 0, points);        // skift en led til blå 
         strip.fill(green, points+1, 48);
         strip.show();

@@ -1,7 +1,8 @@
 #include "pitches.h"
 
 #include <Adafruit_NeoPixel.h>
-Adafruit_NeoPixel strip(48, 6, NEO_GRB + NEO_KHZ800);
+
+Adafruit_NeoPixel strip(2, 6, NEO_GRB + NEO_KHZ800);
 
 uint32_t purple = strip.Color(128, 0, 128);
 uint32_t yellow = strip.Color(255, 255, 0);
@@ -19,7 +20,6 @@ bool knap3 = false;
 int buttonPin = 2;
 int buttonPin2 = 3;
 int buttonPin3 = 4;
-int points = 0;
 const int hallPin = 5;
  
 
@@ -84,8 +84,6 @@ void loop() {
     knap1 = false;
     knap2 = true;
     knap3 = false;
-    points = 0;                           // reset point i legen 
-    mag = false;                          // reset levende 
     Serial.println("Button 2 pressed"); // Print "Button 2 pressed" on Serial Monitor
   }
   while(digitalRead(buttonPin3) == LOW)      // If button 3 pressed
@@ -256,36 +254,33 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
       strip.show();
       gul();
     }
-  /*   else if (farve == 3){
+     else if (farve == 3){
 
       
       strip.fill(blue);
       strip.show();
       blaa();
      }
-      */ 
+       
 
     delay(5000);
-    if (farve >= 2){
+    if (farve >= 3){
       farve = 0;
     }
     
     farve++; 
   }
-   if (hallState == HIGH) {
-        strip.fill(blue);      
-        strip.show();
-        Serial.println("blaa"); 
-      }}
-  void leg2(){
-    
-  // no need to repeat the melody.
-  fsrReading = analogRead(fsrAnalogPin);
-  // Serial.println("Tryk = ");
+
+  strip.clear();
+  strip.show();
+      }
+        void leg2(){
+       // no need to repeat the melody.
+   fsrReading = analogRead(fsrAnalogPin);
+ // Serial.println("Tryk = ");
   Serial.print(fsrReading);
   delay(500);
-  strip.fill(blue, 0, points);              // stift alle led'er pånær 1 point til grøn 
-  strip.fill(green, 1, 48);
+  strip.fill(green);
   strip.show();
   hallState = digitalRead(hallPin);
   
@@ -297,20 +292,23 @@ for (int thisNote = 0;thisNote<4 ; thisNote++) {
       Serial.print("dead");
       mag = true; 
   }
- }
-  if (hallState == HIGH && mag == true) {
-        strip.fill(blue, 0, points);        // stift alle led'er pånær sine point til grøn 
-        strip.fill(green, points+1, 48);    // blå er point farve 
+      }
+      if (hallState == HIGH && mag == true) {
+        strip.fill(green);
         strip.show();
-        gul();                              // genopliv musik 
+        // stift alle led'er pånær sine point til grøn 
+        // blå er point farve 
+        gul(); // genopliv musik 
+        
         Serial.println("alive"); 
         mag = false;
       }
-  else if (hallState == HIGH && mag == false){ 
-        points ++;
-        strip.fill(blue, 0, points);        // skift en led til blå 
-        strip.fill(green, points+1, 48);
-        strip.show();
+      else if (hallState == HIGH && mag == false){
+        // skift en led til blå 
+        // Points ++ 
         Serial.println("pointUp"); 
       }
-     }
+    //  else {
+      //  return null; 
+     // }
+      }

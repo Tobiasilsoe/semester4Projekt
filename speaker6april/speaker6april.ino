@@ -13,10 +13,12 @@ int fsrAnalogPin = A0;
 int fsrReading;
 int farve = 1;
 bool mag = false;
+bool dead = false;
 bool knap1 = false;
 bool knap2 = false;
 bool knap3 = false;
 bool boolTimer =true;
+bool startleg = true;
 int buttonPin = 2;
 int buttonPin2 = 3;
 int buttonPin3 = 4;
@@ -321,12 +323,64 @@ void leg2() {
 
 void leg3()
 {
+ if (startleg==true){
+   strip.fill(blue, 0, points);              // stift alle led'er pånær 1 point til grøn
+  strip.fill(green, 1, 48);
+  strip.show();
+    startleg = false;
+  } 
+  
   fsrReading = analogRead(fsrAnalogPin);
   Serial.print(fsrReading);
-  if (boolTimer== true)'
+  if(boolTimer== true)
     {
     startTime = (millis()/1000);
-  boolTimer= false;
+    boolTimer = false;
     }
+ 
+  hallState = digitalRead(hallPin);
+  // hvis de vinder på tid 
+    tid = (millis()/1000);
+    Serial.print("Time: ");
+    Serial.println(tid); 
+    
+if (tid-startTime == 180)
+{
+    points ++;
+    strip.fill(blue, 0, points);        // skift en led til blå
+    strip.fill(green, points + 1, 48);
+    strip.show();
+    Serial.println("pointUp");
+  }
+  
+ // nedstående er for hvis en bliver ramt
+  if (fsrReading > 300)
+  {
+    if (dead == false) {
+      strip.fill(red);
+      strip.show();
+      Serial.print("dead");
+      dead = true;
+    }
+  }
+  
+  if (hallState == HIGH && dead == true) // resetter vesten
+  {
+    strip.fill(green, 0, 48);  // blå er point farve
+    strip.show();
+    //lyd skal indsættes                              // genopliv musik
+    Serial.println("dead");
+    dead = false;
+    points=0;
+    boolTimer == true
+  }
+  
+  else if (hallState == HIGH && dead == false) {
+    points ++;
+    strip.fill(blue, 0, points);        // skift en led til blå
+    strip.fill(green, points + 1, 48);
+    strip.show();
+    Serial.println("pointUp");
+  }
   
   }

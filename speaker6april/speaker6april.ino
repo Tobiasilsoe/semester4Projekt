@@ -19,6 +19,7 @@ bool knap2 = false;
 bool knap3 = false;
 bool boolTimer =true;
 bool startleg = true;
+bool startup = true;
 int buttonPin = 2;
 int buttonPin2 = 3;
 int buttonPin3 = 4;
@@ -76,6 +77,10 @@ void setup() {
 void loop() {
   delay(100);
 
+  if(startup == true){
+    StartupFunction();
+    startup = false;
+  }
 
   while (digitalRead(buttonPin) == LOW)     // If button 1 pressed
   {
@@ -241,6 +246,10 @@ void blaa() {
 
 }
 
+void StartupFunction() {
+  
+}
+
 void leg1() {
   // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
@@ -372,7 +381,7 @@ if (tid-startTime == 180)
     Serial.println("dead");
     dead = false;
     points=0;
-    boolTimer == true
+    boolTimer == true;
   }
   
   else if (hallState == HIGH && dead == false) {

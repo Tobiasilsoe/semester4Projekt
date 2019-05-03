@@ -276,9 +276,9 @@ void StartupFunction() {
   {
     strip.fill(green);
     strip.show();
-    delay(100);
+    delay(425);
     strip.clear();
-    delay(100);
+    delay(425);
   }
 
   strip.fill(green);

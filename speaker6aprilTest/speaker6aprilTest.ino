@@ -372,7 +372,7 @@ if (tid-startTime == 180)
     Serial.println("dead");
     dead = false;
     points=0;
-    boolTimer == true;
+    boolTimer == true
   }
   
   else if (hallState == HIGH && dead == false) {

@@ -248,6 +248,41 @@ void blaa() {
 
 void StartupFunction() {
   
+  int noteDurations[] = {
+    4, 4, 4, 4, 4, 4, 1
+  };
+
+  // notes in the melody:
+  int melody[] = {
+    NOTE_C6, NOTE_D6, NOTE_C6, NOTE_D6, NOTE_E6, NOTE_D6, NOTE_G6
+    //Define the melody as being the notes following using those defined in pitches.h
+  };
+  for (int thisNote = 0; thisNote < 7; thisNote++) {
+
+    // to calculate the note duration, take one second divided by the note type.
+    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+    int noteDuration = 1000 / noteDurations[thisNote];
+    tone(8, melody[thisNote], noteDuration);
+
+    // to distinguish the notes, set a minimum time between them.
+    // the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noTone(8);
+  }
+  
+  for(int i = 0; i < 3; i++)
+  {
+    strip.fill(green);
+    strip.show();
+    delay(100);
+    strip.clear();
+    delay(100);
+  }
+
+  strip.fill(green);
+  strip.show();
 }
 
 void leg1() {

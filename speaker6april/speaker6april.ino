@@ -399,6 +399,7 @@ void StartupFunction() {
 void leg1() {
   // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
+  hallState = 0;
    hallState = digitalRead(hallPin);
   Serial.println("Tryk = ");
   Serial.println(fsrReading);

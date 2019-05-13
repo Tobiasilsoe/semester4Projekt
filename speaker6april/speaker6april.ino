@@ -399,11 +399,13 @@ void StartupFunction() {
 void leg1() {
   // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
+   hallState = digitalRead(hallPin);
   Serial.println("Tryk = ");
-  Serial.print(fsrReading);
+  Serial.println(fsrReading);
 
-  if (fsrReading > 400)
+  if (fsrReading > 700)
   {
+    hallState = 0;
 
 
     if (farve == 1) {
@@ -435,8 +437,10 @@ void leg1() {
   if (hallState == HIGH) {
     strip.fill(blue);
     strip.show();
-    Serial.println("blaa");
+    //Serial.println("blaa");
+    Serial.println(hallState);
   }
+  Serial.println(hallState);
 }
 void leg2() {
 

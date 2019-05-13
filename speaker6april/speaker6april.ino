@@ -147,7 +147,7 @@ void loop() {
 }
 
 
-  void dead() {
+  void deadSound() {
     int noteDurations[] = {
       2.5f, 2, 1
     };

@@ -456,6 +456,7 @@ while (knap2 == true){
   // Serial.println("Tryk = ");
   Serial.print(fsrReading);
   delay(500);
+  hallState = 1;
   hallState = digitalRead(hallPin);
   if (fsrReading > 600)
   {
@@ -466,7 +467,7 @@ while (knap2 == true){
       mag = true;
     }
   }
-  if (hallState == HIGH && mag == true) {
+  if (hallState == LOW && mag == true) {
     if (points < 1){
     strip.fill(green);  // man bliver genoplivet med 0 pionts 
     strip.show();
@@ -475,18 +476,20 @@ while (knap2 == true){
     mag = false;
     }
     else {
-    strip.fill(blue, 0, points);        // men bliver genoplivet med points points 
-    strip.fill(green, points + 1, 47);  // blå er point farve
+    strip.fill(green,0, 6);
+    strip.fill(blue, 7, points);        // men bliver genoplivet med points points 
+    strip.fill(green, points + 7, 47);  // blå er point farve
     strip.show();
     gul();                              // genopliv musik
     Serial.println("alive");
     mag = false;
     }
     }
-  else if (hallState == true && mag == false) {
+  else if (hallState == LOW && mag == false) {
     points ++;
-    strip.fill(blue, 0, points);        // skift en led til blå
-    strip.fill(green, points + 1, 47);
+    strip.fill(green,0, 6);
+    strip.fill(blue, 7, points);        // skift en led til blå
+    strip.fill(green, points + 7, 47);
     strip.show();
     Serial.println("pointUp");
   }

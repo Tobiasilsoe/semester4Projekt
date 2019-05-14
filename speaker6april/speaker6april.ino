@@ -464,6 +464,7 @@ while (knap2 == true){
       strip.fill(red);
       strip.show();
       Serial.print("dead");
+      deadSound();
       mag = true;
     }
   }
@@ -471,7 +472,7 @@ while (knap2 == true){
     if (points < 1){
     strip.fill(green);  // man bliver genoplivet med 0 pionts 
     strip.show();
-    gul();                              // genopliv musik
+    genopliv();                              // genopliv musik
     Serial.println("alive");
     mag = false;
     }
@@ -480,7 +481,7 @@ while (knap2 == true){
     strip.fill(blue, 7, points);        // men bliver genoplivet med points points 
     strip.fill(green, points + 7, 47);  // blå er point farve
     strip.show();
-    gul();                              // genopliv musik
+    genopliv();                              // genopliv musik
     Serial.println("alive");
     mag = false;
     }
@@ -491,6 +492,7 @@ while (knap2 == true){
     strip.fill(blue, 7, points);        // skift en led til blå
     strip.fill(green, points + 7, 47);
     strip.show();
+    pointUp(); 
     Serial.println("pointUp");
   }
   if (digitalRead(buttonPin) == LOW) {

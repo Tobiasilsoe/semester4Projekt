@@ -33,7 +33,8 @@ const int hallPin = 5;
 int buttonState = 0;
 int buttonState2 = 0;
 int buttonState3 = 0;
-int hallState = 0;
+int hallState = 1;
+
 
 
 
@@ -399,14 +400,14 @@ void StartupFunction() {
 void leg1() {
   // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
-  hallState = 0;
+  hallState = 1;
    hallState = digitalRead(hallPin);
   Serial.println("Tryk = ");
   Serial.println(fsrReading);
 
-  if (fsrReading > 700)
+  if (fsrReading > 500)
   {
-    hallState = 0;
+   hallState = 1;
 
 
     if (farve == 1) {
@@ -435,27 +436,28 @@ void leg1() {
 
     farve++;
   }
-  if (hallState == HIGH) {
+  if (hallState == LOW) {
     strip.fill(blue);
     strip.show();
     //Serial.println("blaa");
     Serial.println(hallState);
+    
   }
   Serial.println(hallState);
 }
+
+
 void leg2() {
 
-  // no need to repeat the melody.
-  fsrReading = analogRead(fsrAnalogPin);
+strip.fill(green);  // man bliver genoplivet med 0 pionts 
+strip.show();
+while (knap2 == true){
+   fsrReading = analogRead(fsrAnalogPin);
   // Serial.println("Tryk = ");
   Serial.print(fsrReading);
   delay(500);
-  strip.fill(blue, 0, points);              // stift alle led'er pånær 1 point til grøn
-  strip.fill(green, 1, 48);
-  strip.show();
   hallState = digitalRead(hallPin);
-
-  if (fsrReading > 200)
+  if (fsrReading > 600)
   {
     if (mag == false) {
       strip.fill(red);
@@ -465,22 +467,39 @@ void leg2() {
     }
   }
   if (hallState == HIGH && mag == true) {
-    strip.fill(blue, 0, points);        // stift alle led'er pånær sine point til grøn
-    strip.fill(green, points + 1, 48);  // blå er point farve
+    if (points < 1){
+    strip.fill(green);  // man bliver genoplivet med 0 pionts 
     strip.show();
     gul();                              // genopliv musik
     Serial.println("alive");
     mag = false;
-  }
-  else if (hallState == HIGH && mag == false) {
+    }
+    else {
+    strip.fill(blue, 0, points);        // men bliver genoplivet med points points 
+    strip.fill(green, points + 1, 47);  // blå er point farve
+    strip.show();
+    gul();                              // genopliv musik
+    Serial.println("alive");
+    mag = false;
+    }
+    }
+  else if (hallState == true && mag == false) {
     points ++;
     strip.fill(blue, 0, points);        // skift en led til blå
-    strip.fill(green, points + 1, 48);
+    strip.fill(green, points + 1, 47);
     strip.show();
     Serial.println("pointUp");
   }
+  if (digitalRead(buttonPin) == LOW) {
+      knap2 = false;
+      knap1 = true;
+    }
+  if (digitalRead(buttonPin3) == LOW) {
+      knap2 = false;
+      knap3 = true;
+    }
 }
-
+}
 void leg3()
 {
  if (startleg==true){

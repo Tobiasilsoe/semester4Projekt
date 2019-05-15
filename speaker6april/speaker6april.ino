@@ -398,14 +398,15 @@ void StartupFunction() {
 }
 
 void leg1() {
+  delay(10);
   // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
   hallState = 1;
    hallState = digitalRead(hallPin);
-  Serial.println("Tryk = ");
+  //Serial.println("Tryk = ");
   Serial.println(fsrReading);
 
-  if (fsrReading > 500)
+  if (fsrReading > 380)
   {
    hallState = 1;
 
@@ -416,7 +417,7 @@ void leg1() {
       lilla();
     }
     else if (farve == 2) {
-      strip.fill(yellow);
+      strip.fill(green);
       strip.show();
       gul();
     }
@@ -440,10 +441,10 @@ void leg1() {
     strip.fill(blue);
     strip.show();
     //Serial.println("blaa");
-    Serial.println(hallState);
+    //Serial.println(hallState);
     
   }
-  Serial.println(hallState);
+  //Serial.println(hallState);
 }
 
 
@@ -458,7 +459,7 @@ while (knap2 == true){
   delay(500);
   hallState = 1;
   hallState = digitalRead(hallPin);
-  if (fsrReading > 600)
+  if (fsrReading > 380)
   {
     if (mag == false) {
       strip.fill(red);
@@ -538,7 +539,7 @@ if (tid-startTime == 180)
   }
   
  // nedstående er for hvis en bliver ramt
-  if (fsrReading > 300)
+  if (fsrReading > 410)
   {
     if (dead == false) {
       strip.fill(red);

@@ -406,7 +406,7 @@ void leg1() {
   //Serial.println("Tryk = ");
   Serial.println(fsrReading);
 
-  if (fsrReading > 380)
+  if (fsrReading > 420)
   {
    hallState = 1;
 

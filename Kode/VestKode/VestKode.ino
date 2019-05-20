@@ -3,8 +3,8 @@
 #include <Adafruit_NeoPixel.h>
 Adafruit_NeoPixel strip(48, 6, NEO_GRB + NEO_KHZ800);
 
-uint32_t purple = strip.Color(128, 0, 128);
-uint32_t yellow = strip.Color(255, 255, 0);
+
+
 uint32_t blue = strip.Color(0, 0, 255);
 uint32_t green = strip.Color(0, 128, 0);
 uint32_t red = strip.Color(255, 0, 0);
@@ -18,7 +18,7 @@ bool knap1 = false;
 bool knap2 = false;
 bool knap3 = false;
 bool boolTimer =true;
-bool startleg = true;
+bool startLeg = true;
 bool startup = true;
 int buttonPin = 2;
 int buttonPin2 = 3;
@@ -34,28 +34,6 @@ int buttonState = 0;
 int buttonState2 = 0;
 int buttonState3 = 0;
 int hallState = 1;
-
-
-
-
-/*NOTE_E4, NOTE_G4, NOTE_D4, NOTE_C4, NOTE_D4,
-  NOTE_E4, NOTE_G4, NOTE_D4,   0,     NOTE_E4,
-  NOTE_G4, NOTE_D5, NOTE_C5, NOTE_G4, NOTE_F4,
-  NOTE_E4, NOTE_D4,    0,    NOTE_E4, NOTE_G4,
-  NOTE_D4, NOTE_C4, NOTE_D4, NOTE_E4, NOTE_G4,
-  NOTE_D4,    0,    NOTE_E4, NOTE_G4, NOTE_D5,
-  NOTE_C5, NOTE_G4*/
-
-/*2,4,2,8,8,                                                          //                                                 2 = 4 beats (whole note)
-  2,4,2,4,2,                                                          //                                                 4 = 2 beats (half note)
-  4,2,4,2,8,                                                          //                                                 8 = 1 beats (quarter note)
-  8,2,4,2,4,
-  2,8,8,2,4,
-  2,4,2,4,2,
-  4,1 */
-/*int noteDurations[] = {
-                                               //Define the note durations, 1 to 1 with melody    1 = 8 beats
-  };*/
 
 
 
@@ -107,7 +85,7 @@ void loop() {
     Serial.println("Button 3 pressed"); // Print "Button 3 pressed" on Serial Monitor
   }
   while (knap1 == true) {
-    //Serial.println("leg1 kaldt");
+    
     leg1();
     if (digitalRead(buttonPin2) == LOW) {
       knap1 = false;
@@ -122,7 +100,7 @@ void loop() {
   }
   while (knap2 == true) {
     leg2();
-    //  Serial.println("leg2 kaldt");
+   
     if (digitalRead(buttonPin) == LOW) {
       knap2 = false;
       knap1 = true;
@@ -133,8 +111,7 @@ void loop() {
     }
   }
   while (knap3 == true) {
-    //leg3();
-    //  Serial.println("leg3 kaldt");
+    
     if (digitalRead(buttonPin) == LOW) {
       knap3 = false;
       knap1 = true;
@@ -153,23 +130,17 @@ void loop() {
       2.5f, 2, 1
     };
 
-    // notes in the melody:
+    
     int melody[] = {
       NOTE_C7, NOTE_G6, NOTE_C6 
-      //Define the melody as being the notes following using those defined in pitches.h
+      
     };
     for (int thisNote = 0; thisNote < 3; thisNote++) {
-
-      // to calculate the note duration, take one second divided by the note type.
-      //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
       int noteDuration = 1000 / noteDurations[thisNote];
       tone(8, melody[thisNote], noteDuration);
 
-      // to distinguish the notes, set a minimum time between them.
-      // the note's duration + 30% seems to work well:
       int pauseBetweenNotes = noteDuration * 1.30;
       delay(pauseBetweenNotes);
-      // stop the tone playing:
       noTone(8);
     }
 
@@ -181,23 +152,15 @@ void pointUp() {
       8, 2
     };
 
-    // notes in the melody:
     int melody[] = {
       NOTE_C6, NOTE_G7
-      //Define the melody as being the notes following using those defined in pitches.h
     };
     for (int thisNote = 0; thisNote < 3; thisNote++) {
-
-      // to calculate the note duration, take one second divided by the note type.
-      //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
       int noteDuration = 1000 / noteDurations[thisNote];
       tone(8, melody[thisNote], noteDuration);
 
-      // to distinguish the notes, set a minimum time between them.
-      // the note's duration + 30% seems to work well:
       int pauseBetweenNotes = noteDuration * 1.30;
       delay(pauseBetweenNotes);
-      // stop the tone playing:
       noTone(8);
     }
 
@@ -209,23 +172,14 @@ void genopliv() {
       2, 4, 8, 1 
     };
 
-    // notes in the melody:
     int melody[] = {
       NOTE_A6, NOTE_B6, NOTE_B6, NOTE_E7 
-      //Define the melody as being the notes following using those defined in pitches.h
     };
     for (int thisNote = 0; thisNote < 4; thisNote++) {
-
-      // to calculate the note duration, take one second divided by the note type.
-      //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
       int noteDuration = 1000 / noteDurations[thisNote];
       tone(8, melody[thisNote], noteDuration);
-
-      // to distinguish the notes, set a minimum time between them.
-      // the note's duration + 30% seems to work well:
       int pauseBetweenNotes = noteDuration * 1.30;
       delay(pauseBetweenNotes);
-      // stop the tone playing:
       noTone(8);
     }
 
@@ -237,23 +191,14 @@ void genopliv() {
       1, 4, 4, 4, 1, 4, 4, 4, 1 
     };
 
-    // notes in the melody:
     int melody[] = {
       NOTE_C6, NOTE_C6, NOTE_G5, NOTE_C6, NOTE_C6, NOTE_D6, NOTE_D6, NOTE_D6, NOTE_G6 
-      //Define the melody as being the notes following using those defined in pitches.h
     };
     for (int thisNote = 0; thisNote < 9; thisNote++) {
-
-      // to calculate the note duration, take one second divided by the note type.
-      //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
       int noteDuration = 1000 / noteDurations[thisNote];
       tone(8, melody[thisNote], noteDuration);
-
-      // to distinguish the notes, set a minimum time between them.
-      // the note's duration + 30% seems to work well:
       int pauseBetweenNotes = noteDuration * 1.30;
       delay(pauseBetweenNotes);
-      // stop the tone playing:
       noTone(8);
     }
 
@@ -261,97 +206,57 @@ void genopliv() {
   }
 
 
-void gul() {
+void ramtSound2() {
   int noteDurations[] = {
     2, 4, 8, 8
   };
-
-  // notes in the melody:
   int melody[] = {
-    //NOTE_E4, NOTE_E4,NOTE_E4,NOTE_E4
-    //NOTE_G4,NOTE_G4,NOTE_G4,NOTE_G4
     NOTE_C7, NOTE_C7, NOTE_C7, NOTE_C7
-    //NOTE_C6,NOTE_C6,NOTE_C6,NOTE_C6
-    //NOTE_C8, NOTE_C8, NOTE_C8,NOTE_C8
-    //Define the melody as being the notes following using those defined in pitches.h
   };
   for (int thisNote = 0; thisNote < 4; thisNote++) {
-
-    // to calculate the note duration, take one second divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(8, melody[thisNote], noteDuration);
-
-    // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
-    // stop the tone playing:
     noTone(8);
   }
 
 
 }
 
-void lilla() {
+void ramtSound1() {
   int noteDurations[] = {
     2, 4, 8, 8
   };
 
-  // notes in the melody:
+
   int melody[] = {
-    //NOTE_E4, NOTE_E4,NOTE_E4,NOTE_E4
-    //NOTE_G4,NOTE_G4,NOTE_G4,NOTE_G4
-    //NOTE_C7,NOTE_C7,NOTE_C7,NOTE_C7
-    //NOTE_C6,NOTE_C6,NOTE_C6,NOTE_C6
     NOTE_C8, NOTE_C8, NOTE_C8, NOTE_C8
-    //Define the melody as being the notes following using those defined in pitches.h
   };
-  //melody[thisNote]!=-1
   for (int thisNote = 0; thisNote < 4 ; thisNote++) {
-
-    // to calculate the note duration, take one second divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(8, melody[thisNote], noteDuration);
-
-    // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
-    // stop the tone playing:
     noTone(8);
   }
 
 
 }
-void blaa() {
+void magnetSound() {
   int noteDurations[] = {
     2, 4, 8, 8
   };
 
-  // notes in the melody:
-  int melody[] = {
-    //NOTE_E4, NOTE_E4,NOTE_E4,NOTE_E4
-    //NOTE_G4,NOTE_G4,NOTE_G4,NOTE_G4
-    //NOTE_C7,NOTE_C7,NOTE_C7,NOTE_C7
-    NOTE_C6, NOTE_C6, NOTE_C6, NOTE_C6
-    //NOTE_C8, NOTE_C8, NOTE_C8,NOTE_C8
-    //Define the melody as being the notes following using those defined in pitches.h
-  };
-  //melody[thisNote]!=-1
-  for (int thisNote = 0; thisNote < 4 ; thisNote++) {
 
-    // to calculate the note duration, take one second divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+  int melody[] = {
+    NOTE_C6, NOTE_C6, NOTE_C6, NOTE_C6
+  };
+  for (int thisNote = 0; thisNote < 4 ; thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(8, melody[thisNote], noteDuration);
-
-    // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
-    // stop the tone playing:
     noTone(8);
   }
 
@@ -363,24 +268,14 @@ void StartupFunction() {
   int noteDurations[] = {
     4, 4, 4, 4, 4, 4, 1
   };
-
-  // notes in the melody:
   int melody[] = {
     NOTE_C6, NOTE_D6, NOTE_C6, NOTE_D6, NOTE_E6, NOTE_D6, NOTE_G6
-    //Define the melody as being the notes following using those defined in pitches.h
   };
   for (int thisNote = 0; thisNote < 7; thisNote++) {
-
-    // to calculate the note duration, take one second divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(8, melody[thisNote], noteDuration);
-
-    // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
-    // stop the tone playing:
     noTone(8);
   }
   
@@ -399,11 +294,9 @@ void StartupFunction() {
 
 void leg1() {
   delay(100);
-  // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
   hallState = digitalRead(hallPin);
   Serial.println(hallState);
-  //Serial.println("Tryk = ");
   Serial.println(fsrReading);
 
   if (fsrReading > 420)
@@ -412,23 +305,15 @@ void leg1() {
 
 
     if (farve == 1) {
-      strip.fill(purple);
+      strip.fill(red);
       strip.show();
-      lilla();
+      ramtSound1();
     }
     else if (farve == 2) {
       strip.fill(green);
       strip.show();
-      gul();
+      ramtSound2();
     }
-    /*   else if (farve == 3){
-
-
-        strip.fill(blue);
-        strip.show();
-        blaa();
-       }
-    */
 
     delay(2000);
     if (farve >= 2) {
@@ -440,11 +325,7 @@ void leg1() {
   if (hallState == LOW) {
     strip.fill(blue);
     strip.show();
-    //Serial.println("blaa");
-    //Serial.println(hallState);
-    
   }
-  //Serial.println(hallState);
 }
 
 
@@ -505,12 +386,12 @@ while (knap2 == true){
 }
 void leg3()
 {
- if (startleg==true){
+ if (startLeg==true){
   strip.fill(green,0, 6);
   strip.fill(blue, 7, points);
   strip.fill(green, points + 7, 47);
   strip.show();
-  startleg = false;
+  startLeg = false;
   tid = (millis()/1000);
   }
   

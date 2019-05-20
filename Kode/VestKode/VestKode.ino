@@ -398,11 +398,11 @@ void StartupFunction() {
 }
 
 void leg1() {
-  delay(10);
+  delay(100);
   // no need to repeat the melody.
   fsrReading = analogRead(fsrAnalogPin);
-  hallState = 1;
-   hallState = digitalRead(hallPin);
+  hallState = digitalRead(hallPin);
+  Serial.println(hallState);
   //Serial.println("Tryk = ");
   Serial.println(fsrReading);
 
@@ -430,7 +430,7 @@ void leg1() {
        }
     */
 
-    delay(5000);
+    delay(2000);
     if (farve >= 2) {
       farve = 0;
     }
@@ -457,17 +457,14 @@ while (knap2 == true){
   // Serial.println("Tryk = ");
   Serial.print(fsrReading);
   delay(100);
-  hallState = 1;
   hallState = digitalRead(hallPin);
-  if (fsrReading > 380)
+  if (fsrReading > 420 && mag == false)
   {
-    if (mag == false) {
-      strip.fill(red);
-      strip.show();
-      Serial.print("dead");
-      deadSound();
-      mag = true;
-    }
+     strip.fill(red);
+     strip.show();
+     Serial.print("dead");
+     deadSound();
+     mag = true;
   }
   if (hallState == LOW && mag == true) {
     if (points < 1){
@@ -509,11 +506,13 @@ while (knap2 == true){
 void leg3()
 {
  if (startleg==true){
- // strip.fill(blue, 0, points);              // stift alle led'er pånær 1 point til grøn
-  strip.fill(green);
+  strip.fill(green,0, 6);
+  strip.fill(blue, 7, points);
+  strip.fill(green, points + 7, 47);
   strip.show();
   startleg = false;
-  } 
+  tid = (millis()/1000);
+  }
   
   fsrReading = analogRead(fsrAnalogPin);
   Serial.print(fsrReading);
@@ -524,22 +523,23 @@ void leg3()
     }
  
   hallState = digitalRead(hallPin);
-  // hvis de vinder på tid 
-    tid = (millis()/1000);
     Serial.print("Time: ");
     Serial.println(tid); 
     
 if (tid-startTime == 180)
 {
     points ++;
-    strip.fill(green, 0, points);        // skift en led til blå
-    strip.fill(blue, points + 1, 47);
+    strip.fill(green,0, 6);
+    strip.fill(blue, 7, points);        // skift en led til blå
+    strip.fill(green, points + 7, 47);
     strip.show();
     Serial.println("pointUp");
+    vundet();
+    startLeg = true;
   }
   
  // nedstående er for hvis en bliver ramt
-  if (fsrReading > 410)
+  if (fsrReading > 420)
   {
     if (dead == false) {
       strip.fill(red);
@@ -551,13 +551,14 @@ if (tid-startTime == 180)
   
   if (hallState == LOW && dead == true) // resetter vesten
   {
-    strip.fill(green, 0, 47);  // blå er point farve
+    strip.fill(green, 0, 47);
     strip.show();
     //lyd skal indsættes                              // genopliv musik
     Serial.println("dead");
     dead = false;
     points=0;
     boolTimer == true;
+    tid = (millis()/1000);
   }
   
   else if (hallState == LOW && dead == false) {

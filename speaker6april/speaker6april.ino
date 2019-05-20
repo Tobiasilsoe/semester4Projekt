@@ -456,7 +456,7 @@ while (knap2 == true){
    fsrReading = analogRead(fsrAnalogPin);
   // Serial.println("Tryk = ");
   Serial.print(fsrReading);
-  delay(500);
+  delay(100);
   hallState = 1;
   hallState = digitalRead(hallPin);
   if (fsrReading > 380)
@@ -509,10 +509,10 @@ while (knap2 == true){
 void leg3()
 {
  if (startleg==true){
-   strip.fill(blue, 0, points);              // stift alle led'er pånær 1 point til grøn
-  strip.fill(green, 1, 48);
+ // strip.fill(blue, 0, points);              // stift alle led'er pånær 1 point til grøn
+  strip.fill(green);
   strip.show();
-    startleg = false;
+  startleg = false;
   } 
   
   fsrReading = analogRead(fsrAnalogPin);
@@ -532,8 +532,8 @@ void leg3()
 if (tid-startTime == 180)
 {
     points ++;
-    strip.fill(blue, 0, points);        // skift en led til blå
-    strip.fill(green, points + 1, 48);
+    strip.fill(green, 0, points);        // skift en led til blå
+    strip.fill(blue, points + 1, 47);
     strip.show();
     Serial.println("pointUp");
   }
@@ -549,9 +549,9 @@ if (tid-startTime == 180)
     }
   }
   
-  if (hallState == HIGH && dead == true) // resetter vesten
+  if (hallState == LOW && dead == true) // resetter vesten
   {
-    strip.fill(green, 0, 48);  // blå er point farve
+    strip.fill(green, 0, 47);  // blå er point farve
     strip.show();
     //lyd skal indsættes                              // genopliv musik
     Serial.println("dead");
@@ -560,11 +560,13 @@ if (tid-startTime == 180)
     boolTimer == true;
   }
   
-  else if (hallState == HIGH && dead == false) {
+  else if (hallState == LOW && dead == false) {
     points ++;
-    strip.fill(blue, 0, points);        // skift en led til blå
-    strip.fill(green, points + 1, 48);
+    strip.fill(green,0, 6);
+    strip.fill(blue, 7, points);        // skift en led til blå
+    strip.fill(green, points + 7, 47);
     strip.show();
+    pointUp(); 
     Serial.println("pointUp");
   }
   

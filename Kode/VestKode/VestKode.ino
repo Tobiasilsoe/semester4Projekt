@@ -283,6 +283,7 @@ void StartupFunction() {
   {
     strip.setPixelColor(i, green);
     strip.show();
+    delay(50);
   }
 }
 
@@ -342,28 +343,28 @@ while (knap2 == true){
      mag = true;
   }
   if (hallState == LOW && mag == true) {
-    if (points < 1){
+    /*if (points < 1){
     strip.fill(green);  // man bliver genoplivet med 0 pionts 
     strip.show();
     genopliv();                              // genopliv musik
     Serial.println("alive");
     mag = false;
     }
-    else {
-    strip.fill(green,0, 7);
-    strip.fill(blue, 7, points);        // men bliver genoplivet med points points 
-    strip.fill(green, points + 7, 42);  // blå er point farve
+    else {*/
+    strip.fill(blue, 6, points);        // men bliver genoplivet med points points 
+    strip.fill(green,0, 6);
+    strip.fill(green, points + 6, 42);  // blå er point farve
     strip.show();
     genopliv();                              // genopliv musik
     Serial.println("alive");
     mag = false;
-    }
+    //}
     }
   else if (hallState == LOW && mag == false) {
     points ++;
-    strip.fill(green,0, 7);
-    strip.fill(blue, 7, points);        // skift en led til blå
-    strip.fill(green, points + 7, 42);
+    strip.fill(green,0, 6);
+    strip.fill(blue, 6, points);        // skift en led til blå
+    strip.fill(green, points + 6, 42);
     strip.show();
     pointUp(); 
     Serial.println("pointUp");
@@ -382,8 +383,8 @@ void leg3()
 {
  if (startLeg==true){
   strip.fill(green,0, 6);
-  strip.fill(blue, 7, points);
-  strip.fill(green, points + 7, 42);
+  strip.fill(blue, 6, points);
+  strip.fill(green, points + 6, 42);
   strip.show();
   startLeg = false;
   tid = (millis()/1000);
@@ -405,8 +406,8 @@ if (tid-startTime == 180)
 {
     points ++;
     strip.fill(green,0, 6);
-    strip.fill(blue, 7, points);        // skift en led til blå
-    strip.fill(green, points + 7, 42);
+    strip.fill(blue, 6, points);        // skift en led til blå
+    strip.fill(green, points + 6, 42);
     strip.show();
     Serial.println("pointUp");
     vundet();
@@ -439,8 +440,8 @@ if (tid-startTime == 180)
   else if (hallState == LOW && dead == false) {
     points ++;
     strip.fill(green,0, 6);
-    strip.fill(blue, 7, points);        // skift en led til blå
-    strip.fill(green, points + 7, 42);
+    strip.fill(blue, 6, points);        // skift en led til blå
+    strip.fill(green, points + 6, 42);
     strip.show();
     pointUp(); 
     Serial.println("pointUp");

@@ -350,7 +350,7 @@ while (knap2 == true){
     mag = false;
     }
     else {
-    strip.fill(green,0, 6);
+    strip.fill(green,0, 7);
     strip.fill(blue, 7, points);        // men bliver genoplivet med points points 
     strip.fill(green, points + 7, 42);  // blå er point farve
     strip.show();
@@ -361,7 +361,7 @@ while (knap2 == true){
     }
   else if (hallState == LOW && mag == false) {
     points ++;
-    strip.fill(green,0, 6);
+    strip.fill(green,0, 7);
     strip.fill(blue, 7, points);        // skift en led til blå
     strip.fill(green, points + 7, 42);
     strip.show();

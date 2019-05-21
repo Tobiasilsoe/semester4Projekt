@@ -1,7 +1,7 @@
 #include "pitches.h"
 
 #include <Adafruit_NeoPixel.h>
-Adafruit_NeoPixel strip(48, 6, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(42, 6, NEO_GRB + NEO_KHZ800);
 
 
 
@@ -279,17 +279,11 @@ void StartupFunction() {
     noTone(8);
   }
   
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i <= 42; i++)
   {
-    strip.fill(green);
+    strip.setPixelColor(i, green);
     strip.show();
-    delay(425);
-    strip.clear();
-    delay(425);
   }
-
-  strip.fill(green);
-  strip.show();
 }
 
 void leg1() {
@@ -358,7 +352,7 @@ while (knap2 == true){
     else {
     strip.fill(green,0, 6);
     strip.fill(blue, 7, points);        // men bliver genoplivet med points points 
-    strip.fill(green, points + 7, 47);  // blå er point farve
+    strip.fill(green, points + 7, 42);  // blå er point farve
     strip.show();
     genopliv();                              // genopliv musik
     Serial.println("alive");
@@ -369,7 +363,7 @@ while (knap2 == true){
     points ++;
     strip.fill(green,0, 6);
     strip.fill(blue, 7, points);        // skift en led til blå
-    strip.fill(green, points + 7, 47);
+    strip.fill(green, points + 7, 42);
     strip.show();
     pointUp(); 
     Serial.println("pointUp");
@@ -389,7 +383,7 @@ void leg3()
  if (startLeg==true){
   strip.fill(green,0, 6);
   strip.fill(blue, 7, points);
-  strip.fill(green, points + 7, 47);
+  strip.fill(green, points + 7, 42);
   strip.show();
   startLeg = false;
   tid = (millis()/1000);
@@ -412,7 +406,7 @@ if (tid-startTime == 180)
     points ++;
     strip.fill(green,0, 6);
     strip.fill(blue, 7, points);        // skift en led til blå
-    strip.fill(green, points + 7, 47);
+    strip.fill(green, points + 7, 42);
     strip.show();
     Serial.println("pointUp");
     vundet();
@@ -432,7 +426,7 @@ if (tid-startTime == 180)
   
   if (hallState == LOW && dead == true) // resetter vesten
   {
-    strip.fill(green, 0, 47);
+    strip.fill(green, 0, 42);
     strip.show();
     //lyd skal indsættes                              // genopliv musik
     Serial.println("dead");
@@ -446,7 +440,7 @@ if (tid-startTime == 180)
     points ++;
     strip.fill(green,0, 6);
     strip.fill(blue, 7, points);        // skift en led til blå
-    strip.fill(green, points + 7, 47);
+    strip.fill(green, points + 7, 42);
     strip.show();
     pointUp(); 
     Serial.println("pointUp");

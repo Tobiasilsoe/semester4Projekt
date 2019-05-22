@@ -6,7 +6,7 @@ Adafruit_NeoPixel strip(42, 6, NEO_GRB + NEO_KHZ800);
 
 
 uint32_t blue = strip.Color(0, 0, 255);
-uint32_t green = strip.Color(0, 128, 0);
+uint32_t green = strip.Color(0, 255, 0);
 uint32_t red = strip.Color(255, 0, 0);
 
 int fsrAnalogPin = A0;
@@ -66,6 +66,8 @@ void loop() {
     knap1 = true;
     knap2 = false;
     knap3 = false;
+    points = 0;
+    startLeg = true;
     Serial.println("Button 1 pressed"); // Print "Button 1 pressed" on Serial Monitor
   }
   while (digitalRead(buttonPin2) == LOW)     // If button 2 pressed
@@ -75,6 +77,7 @@ void loop() {
     knap3 = false;
     points = 0;                           // reset point i legen
     mag = false;                          // reset levende
+    startLeg = true;
     Serial.println("Button 2 pressed"); // Print "Button 2 pressed" on Serial Monitor
   }
   while (digitalRead(buttonPin3) == LOW)     // If button 3 pressed
@@ -82,6 +85,8 @@ void loop() {
     knap1 = false;
     knap2 = false;
     knap3 = true;
+    points = 0;
+    startLeg = true;
     Serial.println("Button 3 pressed"); // Print "Button 3 pressed" on Serial Monitor
   }
   while (knap1 == true) {
@@ -90,10 +95,15 @@ void loop() {
     if (digitalRead(buttonPin2) == LOW) {
       knap1 = false;
       knap2 = true;
+      points = 0;                           // reset point i legen
+      mag = false;                          // reset levende
+      startLeg = true;
     }
     if (digitalRead(buttonPin3) == LOW) {
       knap1 = false;
       knap3 = true;
+      points = 0;
+      startLeg = true;
     }
 
 
@@ -104,10 +114,14 @@ void loop() {
     if (digitalRead(buttonPin) == LOW) {
       knap2 = false;
       knap1 = true;
+      points = 0;
+      startLeg = true;
     }
     if (digitalRead(buttonPin3) == LOW) {
       knap2 = false;
       knap3 = true;
+      points = 0;
+      startLeg = true;
     }
   }
   while (knap3 == true) {
@@ -115,10 +129,15 @@ void loop() {
     if (digitalRead(buttonPin) == LOW) {
       knap3 = false;
       knap1 = true;
+      points = 0;
+      startLeg = true;
     }
     if (digitalRead(buttonPin2) == LOW) {
       knap3 = false;
       knap2 = true;
+      points = 0;                           // reset point i legen
+      mag = false;                          // reset levende
+      startLeg = true;
     }
 
   }
@@ -287,14 +306,23 @@ void StartupFunction() {
     strip.show();
     delay(50);
   }
-  strip.fill(green);
-  strip.show();
-  strip.fill(green);
+  delay(1000);
+  strip.clear();
   strip.show();
 }
 
 void leg1() {
-  delay(100);
+  if(startLeg == true){
+    strip.fill(green);
+    strip.show();
+    delay(500);
+    strip.clear();
+    strip.show();
+    delay(500);
+    strip.fill(green);
+    strip.show();
+    startLeg = false;
+  }
   fsrReading = analogRead(fsrAnalogPin);
   hallState = digitalRead(hallPin);
   Serial.println(hallState);
@@ -338,9 +366,17 @@ void leg1() {
 
 void leg2() {
 
-strip.fill(green);  // man bliver genoplivet med 0 pionts 
-strip.show();
-while (knap2 == true){
+if(startLeg == true){
+    strip.fill(green);
+    strip.show();
+    delay(500);
+    strip.clear();
+    strip.show();
+    delay(500);
+    strip.fill(green);
+    strip.show();
+    startLeg = false;
+  }
    fsrReading = analogRead(fsrAnalogPin);
   // Serial.println("Tryk = ");
   Serial.print(fsrReading);
@@ -383,34 +419,25 @@ while (knap2 == true){
     
     Serial.println("pointUp");
   }
-  if (digitalRead(buttonPin) == LOW) {
-      knap2 = false;
-      knap1 = true;
-    }
-  if (digitalRead(buttonPin3) == LOW) {
-      knap2 = false;
-      knap3 = true;
-    }
-}
 }
 void leg3()
 {
   
- if (startLeg==true){
-  strip.fill(green,0, 6);
-  strip.fill(blue, 6, points);
-  strip.fill(green, points + 6, 42);
-  strip.show();
-  strip.fill(green,0, 6);
-  strip.fill(blue, 6, points);
-  strip.fill(green, points + 6, 42);
-  strip.show();
-  startLeg = false;
- 
+ if(startLeg == true){
+    strip.fill(green);
+    strip.show();
+    delay(500);
+    strip.clear();
+    strip.show();
+    delay(500);
+    strip.fill(green);
+    strip.show();
+    startLeg = false;
   }
   
   fsrReading = analogRead(fsrAnalogPin);
-  Serial.print(fsrReading);
+  Serial.println(fsrReading);
+  Serial.println("wow");
   
  
   hallState = digitalRead(hallPin);

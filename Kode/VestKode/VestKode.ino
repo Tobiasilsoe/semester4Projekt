@@ -287,6 +287,10 @@ void StartupFunction() {
     strip.show();
     delay(50);
   }
+  strip.fill(green);
+  strip.show();
+  strip.fill(green);
+  strip.show();
 }
 
 void leg1() {
